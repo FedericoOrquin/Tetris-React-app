@@ -19,15 +19,19 @@ export const usePlayer = () => {
   }
 
   function playerRotate(stage, dir) {
+    //we make a deep clone of the player so we dont mutate the player state
     const clonedPlayer = JSON.parse(JSON.stringify(player));
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
+    //this is to make sure the tetromino doesnt collid with the container while rotating
+    //also it ensures it doesnt collide with others tetrominos
     const pos = clonedPlayer.pos.x;
     let offset = 1;
     while (checkCollision(clonedPlayer, stage, { x: 0, y: 0 })) {
       clonedPlayer.pos.x += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > clonedPlayer.tetromino[0].length) {
+        //since we cant do it because it collides we rotate it back to where it was
         rotate(clonedPlayer.tetromino, -dir);
         clonedPlayer.pos.x = pos;
         return;

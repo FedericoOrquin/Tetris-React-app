@@ -3,14 +3,17 @@ import { createStage } from '../gameHelpers';
 
 export const useStage = (player, resetPlayer) => {
   const [stage, setStage] = useState(createStage());
+  //to check the rows cleared and set an score
   const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
     setRowsCleared(0);
     const sweepRows = newStage =>
       newStage.reduce((ack, row) => {
+       //we know we found a complete row so we clear it if it return -1 
         if (row.findIndex(cell => cell[0] === 0) === -1) {
           setRowsCleared(prev => prev + 1);
+          //we add a new cleared row at the top
           ack.unshift(new Array(newStage[0].length).fill([0, 'clear']));
           return ack;
         }

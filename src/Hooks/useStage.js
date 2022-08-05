@@ -10,7 +10,7 @@ export const useStage = (player, resetPlayer) => {
     setRowsCleared(0);
     const sweepRows = newStage =>
       newStage.reduce((ack, row) => {
-       //we know we found a complete row so we clear it if it return -1 
+        //we know we found a complete row so we clear it if it return -1 
         if (row.findIndex(cell => cell[0] === 0) === -1) {
           setRowsCleared(prev => prev + 1);
           //we add a new cleared row at the top
